@@ -16,7 +16,7 @@ export const createErrorHandlers = (app: Express) => {
       return next(error);
     }
     try {
-      resp.statusCode = 500;
+      resp.statusCode = resp.statusCode || 500;
       resp.json({
         success: false,
         error: error.message,

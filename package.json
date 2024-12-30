@@ -7,6 +7,9 @@
     "server": "nodemon --exec npm run watch",
     "start": "tsc && node dist/server.js"
   },
+  "prisma": {
+    "seed": "tsc-watch src/db/seed.ts --onsuccess \"node src/db/seed.js\""
+  },
   "nodemonConfig": {
     "ext": "ts,json",
     "ignore": [
@@ -29,6 +32,7 @@
   "dependencies": {
     "@prisma/client": "^6.1.0",
     "express": "^4.21.2",
-    "prisma": "^6.1.0"
+    "prisma": "^6.1.0",
+    "uuid": "^11.0.3"
   }
 }

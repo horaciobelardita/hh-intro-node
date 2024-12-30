@@ -1,4 +1,3 @@
-import { createServer } from "http";
 import express, { Express } from "express";
 import { createRoutes } from "./routes";
 import { createErrorHandlers } from "./errors";
