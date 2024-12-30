@@ -1,0 +1,32 @@
+{
+  "name": "intro-node",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "watch": "tsc-watch --noClear --onsuccess \"node dist/server.js\"",
+    "server": "nodemon --exec npm run watch",
+    "start": "node dist/server.js"
+  },
+  "nodemonConfig": {
+    "ext": "ts,json",
+    "ignore": [
+      "dist/**",
+      "node_modules/**"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "nodemon": "^3.1.9",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
