@@ -5,7 +5,8 @@
   "scripts": {
     "watch": "tsc-watch --noClear --onsuccess \"node dist/server.js\"",
     "server": "nodemon --exec npm run watch",
-    "start": "tsc && node dist/server.js"
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "prisma": {
     "seed": "tsc-watch src/db/seed.ts --onsuccess \"node src/db/seed.js\""
