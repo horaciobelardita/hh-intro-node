@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "tsc-watch --noClear --onsuccess \"node dist/server.js\"",
     "server": "nodemon --exec npm run watch",
-    "start": "node dist/server.js"
+    "start": "tsc && node dist/server.js"
   },
   "nodemonConfig": {
     "ext": "ts,json",
