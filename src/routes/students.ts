@@ -1,4 +1,10 @@
-import { Express, RequestHandler } from "express";
+import {
+  Express,
+  NextFunction,
+  Response,
+  Request,
+  RequestHandler,
+} from "express";
 import { prisma } from "../db";
 import { validate as uuidValidate } from "uuid";
 
@@ -12,6 +18,17 @@ export const createStudentsRoutes = (app: Express) => {
     next();
   };
 
+  const checkDataType =
+    (field: string, type: string) =>
+    (req: Request, res: Response, next: NextFunction) => {
+      const value = req.body[field];
+      if (value && typeof value !== type) {
+        res.statusCode = 400;
+        throw new Error(`${field} must be a ${type}`);
+      }
+      next();
+    };
+
   app.get("/students", async (req, resp) => {
     const students = await prisma.student.findMany();
     resp.json({
@@ -20,27 +37,44 @@ export const createStudentsRoutes = (app: Express) => {
     });
   });
 
-  app.patch("/students/:studentId", checkIsValidUUID, async (req, resp) => {
-    const { studentId } = req.params;
-    const { name } = req.body;
-    if (!name || name.trim().length === 0) {
-      resp.status(400).json({
-        success: false,
-        message: "Name is required",
+  app.patch(
+    "/students/:studentId",
+    checkIsValidUUID,
+    checkDataType("name", "string"),
+    async (req, resp) => {
+      const { studentId } = req.params;
+      const { name } = req.body;
+
+      if (!name || name.trim().length === 0) {
+        resp.status(400).json({
+          success: false,
+          message: "Name is required",
+        });
+        return;
+      }
+      const foundStudent = await prisma.student.findUnique({
+        where: { id: studentId },
       });
-      return;
+      if (!foundStudent) {
+        resp.status(404).json({
+          success: false,
+          message: "Student not found",
+        });
+        return;
+      }
+
+      const student = await prisma.student.update({
+        where: { id: studentId },
+        data: {
+          name,
+        },
+      });
+      resp.json({
+        success: true,
+        student,
+      });
     }
-    const student = await prisma.student.update({
-      where: { id: studentId },
-      data: {
-        name,
-      },
-    });
-    resp.json({
-      success: true,
-      student,
-    });
-  });
+  );
 
   app.get("/students/:studentId", checkIsValidUUID, async (req, resp) => {
     const { studentId } = req.params;

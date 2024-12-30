@@ -1,5 +1,5 @@
 import { Express, ErrorRequestHandler } from "express";
-// import "express-async-errors";
+import "express-async-errors";
 
 export const createErrorHandlers = (app: Express) => {
   app.use((req, resp) => {
@@ -11,7 +11,6 @@ export const createErrorHandlers = (app: Express) => {
   });
 
   const handler: ErrorRequestHandler = (error, req, resp, next) => {
-    console.log(error);
     if (resp.headersSent) {
       return next(error);
     }
