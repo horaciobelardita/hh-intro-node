@@ -2,7 +2,7 @@ import { createServer } from "http";
 import express, { Express } from "express";
 import { createRoutes } from "./routes";
 import { createErrorHandlers } from "./errors";
-const port = 3000;
+const port = process.env.PORT || 3000;
 const expressApp: Express = express();
 
 expressApp.use(express.json());
