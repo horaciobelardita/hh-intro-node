@@ -3,6 +3,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prisma } from "../db";
 
+export async function findUserByUsername(username: string) {
+  return await prisma.user.findUnique({ where: { username } });
+}
+
 export async function createUser({ username, password }: Omit<User, "id">) {
   const hashedPassword = await bcrypt.hash(password, 10);
   return await prisma.user.create({
