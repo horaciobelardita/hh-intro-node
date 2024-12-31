@@ -10,15 +10,15 @@ generator client {
 }
 
 datasource db {
-  // provider = "postgresql"
-  provider = "cockroachdb"
+  provider = "postgresql"
+  // provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model User {
    id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name    String
-  count Int @default(0)
+  username String @unique
+  password String
 }
 
 model Student {

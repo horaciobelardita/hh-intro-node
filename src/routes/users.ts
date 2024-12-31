@@ -26,25 +26,21 @@ export const createUsersRoutes = (app: Express) => {
     });
   });
 
-  app.post("/users", async (req, resp) => {
-    const { name } = req.body;
-    if (!name || name.trim().length === 0) {
-      resp.status(400).json({
-        success: false,
-        message: "Name is required",
-      });
-      return;
-    }
-    const user = await prisma.user.create({
-      data: {
-        name,
-      },
-    });
-    resp.status(201).json({
-      success: true,
-      user,
-    });
-  });
+  // app.post("/users", async (req, resp) => {
+  //   const { name } = req.body;
+  //   if (!name || name.trim().length === 0) {
+  //     resp.status(400).json({
+  //       success: false,
+  //       message: "Name is required",
+  //     });
+  //     return;
+  //   }
+
+  //   resp.status(201).json({
+  //     success: true,
+  //     user,
+  //   });
+  // });
 
   // app.get("/err", (req, resp) => {
   //     throw new Error ("Something bad happened");
